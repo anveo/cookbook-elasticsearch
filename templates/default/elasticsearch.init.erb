@@ -16,6 +16,10 @@ if [ -f /etc/sysconfig/network ]; then source /etc/sysconfig/network; fi
 ulimit -n <%= node[:elasticsearch][:limits][:nofile] %>
 ulimit -l <%= node[:elasticsearch][:limits][:memlock] %>
 
+mkdir -p <%= node[:elasticsearch][:pid_path] %>
+chmod 755 <%= node[:elasticsearch][:pid_path] %>
+chown <%= node[:elasticsearch][:user] %>:<%= node[:elasticsearch][:user] %> <%= node[:elasticsearch][:pid_path] %>
+
 # Exit if networking is not up
 #
 [ "$NETWORKING" = "no" ] && exit
